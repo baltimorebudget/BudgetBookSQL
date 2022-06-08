@@ -16,17 +16,13 @@ SELECT CASE WHEN Pln.[JOB NUMBER] IS NULL THEN 'Yes (old)'
 		FORMAT(Pln.Salary - Pri.[FY22 Salary], 'C', 'en-us') AS 'Salary Difference',
 		CASE WHEN Pln.Salary > Pri.[FY22 Salary] THEN 'Salary increased'
 			WHEN Pln.Salary < Pri.[FY22 Salary] THEN 'Salary decreased'
-			WHEN Pln.Salary = Pri.[FY22 Salary] THEN 'No change'
+			WHEN Pln.Salary = Pri.[FY22 Salary] THEN 'No'
 			END AS 'Salary Changed?',
-		--CASE WHEN (Pln.[OSO 101] > Pri.[OSO 101]) OR (Pln.[OSO 103] > Pri.[OSO 103]) 
-		--			OR (Pln.[OSO 161] > Pri.[OSO 161]) OR (Pln.[OSO 162] > Pri.[OSO 162]) THEN 'Increase in employee compensation and benefits'
-		--	WHEN Pln.[OSO 101] < Pri.[OSO 101] OR (Pln.[OSO 103] < Pri.[OSO 103]) 
-		--			OR (Pln.[OSO 161] < Pri.[OSO 161]) OR (Pln.[OSO 162] < Pri.[OSO 162]) THEN 'Decrease in employee compensation and benefits'
-		--	WHEN (Pln.[OSO 201] > Pri.[OSO 201]) OR (Pln.[OSO 203] > Pri.[OSO 203]) 
-		--			OR (Pln.[OSO 202] > Pri.[OSO 202]) THEN 'Increase in pension contributions'
-		--	WHEN (Pln.[OSO 201] < Pri.[OSO 201]) OR (Pln.[OSO 203] < Pri.[OSO 203]) 
-		--			OR (Pln.[OSO 202] < Pri.[OSO 202]) THEN 'Increase in pension contributions'
-		--	ELSE 'No change' END AS 'Change/Adjustment',
+		FORMAT(((Pln.[OSO 101] + Pln.[OSO 103] + Pln.[OSO 161] + Pln.[OSO 162] + Pln.[OSO 201] + Pln.[OSO 202] + Pln.[OSO 203] + Pln.[OSO 205] + Pln.[OSO 207] + Pln.[OSO 210] + Pln.[OSO 212] + Pln.[OSO 213] + Pln.[OSO 231] + Pln.[OSO 231] + Pln.[OSO 233] + Pln.[OSO 235]) - (Pri.[OSO 101] + Pri.[OSO 103] + Pri.[OSO 161] + Pri.[OSO 162] + Pri.[OSO 201] + Pri.[OSO 202] + Pri.[OSO 203] + Pri.[OSO 205] + Pri.[OSO 207] + Pri.[OSO 210] + Pri.[OSO 212] + Pri.[OSO 213] + Pri.[OSO 231] + Pri.[OSO 231] + Pri.[OSO 233] + Pri.[OSO 235])), 'C', 'en-us') AS 'OPC Difference',
+		CASE WHEN ((Pln.[OSO 101] + Pln.[OSO 103] + Pln.[OSO 161] + Pln.[OSO 162] + Pln.[OSO 201] + Pln.[OSO 202] + Pln.[OSO 203] + Pln.[OSO 205] + Pln.[OSO 207] + Pln.[OSO 210] + Pln.[OSO 212] + Pln.[OSO 213] + Pln.[OSO 231] + Pln.[OSO 231] + Pln.[OSO 233] + Pln.[OSO 235]) - (Pri.[OSO 101] + Pri.[OSO 103] + Pri.[OSO 161] + Pri.[OSO 162] + Pri.[OSO 201] + Pri.[OSO 202] + Pri.[OSO 203] + Pri.[OSO 205] + Pri.[OSO 207] + Pri.[OSO 210] + Pri.[OSO 212] + Pri.[OSO 213] + Pri.[OSO 231] + Pri.[OSO 231] + Pri.[OSO 233] + Pri.[OSO 235])) > 0 THEN 'OPCs increased'
+			WHEN ((Pln.[OSO 101] + Pln.[OSO 103] + Pln.[OSO 161] + Pln.[OSO 162] + Pln.[OSO 201] + Pln.[OSO 202] + Pln.[OSO 203] + Pln.[OSO 205] + Pln.[OSO 207] + Pln.[OSO 210] + Pln.[OSO 212] + Pln.[OSO 213] + Pln.[OSO 231] + Pln.[OSO 231] + Pln.[OSO 233] + Pln.[OSO 235]) - (Pri.[OSO 101] + Pri.[OSO 103] + Pri.[OSO 161] + Pri.[OSO 162] + Pri.[OSO 201] + Pri.[OSO 202] + Pri.[OSO 203] + Pri.[OSO 205] + Pri.[OSO 207] + Pri.[OSO 210] + Pri.[OSO 212] + Pri.[OSO 213] + Pri.[OSO 231] + Pri.[OSO 231] + Pri.[OSO 233] + Pri.[OSO 235])) < 0 THEN 'OPCs decreased'
+			ELSE 'No'
+			END AS 'OPCs Changed?',
 		Pln.[JOB NUMBER] AS 'FY23 Job Number',
 		Pri.[FY22 Job Number],
 		Pln.[ADOPTED] AS 'FY23 Adopted Status',
@@ -52,6 +48,8 @@ SELECT CASE WHEN Pln.[JOB NUMBER] IS NULL THEN 'Yes (old)'
 		Pln.[ACTIVITY NAME] AS 'FY23 Activity Name',
 		Pln.[SI NAME] AS 'FY23 Special Indicator',
 		Pln.[STATUS] AS 'FY23 Status',
+		FORMAT(Pri.[OSO 101] + Pri.[OSO 103] + Pri.[OSO 161] + Pri.[OSO 162] + Pri.[OSO 201] + Pri.[OSO 202] + Pri.[OSO 203] + Pri.[OSO 205] + Pri.[OSO 207] + Pri.[OSO 210] + Pri.[OSO 212] + Pri.[OSO 213] + Pri.[OSO 231] + Pri.[OSO 231] + Pri.[OSO 233] + Pri.[OSO 235], 'C', 'en-us') AS 'FY22 OSO Total',
+		FORMAT(Pln.[OSO 101] + Pln.[OSO 103] + Pln.[OSO 161] + Pln.[OSO 162] + Pln.[OSO 201] + Pln.[OSO 202] + Pln.[OSO 203] + Pln.[OSO 205] + Pln.[OSO 207] + Pln.[OSO 210] + Pln.[OSO 212] + Pln.[OSO 213] + Pln.[OSO 231] + Pln.[OSO 231] + Pln.[OSO 233] + Pln.[OSO 235], 'C', 'en-us') AS 'FY23 OSO Total',
 		FORMAT(Pln.[OSO 101], 'C', 'en-us') AS 'FY23 Subobject 101',
 		FORMAT(Pln.[OSO 103], 'C', 'en-us') AS 'FY23 Subobject 103',
 		FORMAT(Pln.[OSO 161], 'C', 'en-us') AS 'FY23 Subobject 161',
@@ -104,4 +102,5 @@ SELECT CASE WHEN Pln.[JOB NUMBER] IS NULL THEN 'Yes (old)'
                 ON Prv.[Job Number] = Prj.[Job Number]
         ) Pri 
 ON Pri.[JOB NUMBER] = Pln.[JOB NUMBER]
+--adjust filter
 WHERE Pln.[CLASSIFICATION ID] != Pri.[FY22 Class ID]
