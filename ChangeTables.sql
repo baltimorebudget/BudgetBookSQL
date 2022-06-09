@@ -214,3 +214,6 @@ SELECT * FROM #temp_table_position
 --'
 --EXECUTE(@sql)
 
+--PowerShell Command
+--Invoke-Sqlcmd -InputFile "C:\Users\sara.brumfield2\Documents\SQL Server Management Studio\BudgetBook\BudgetBook\ChangeTables.sql" | Out-File -FilePath "C:\Users\sara.brumfield2\Documents\SQL Server Management Studio\BudgetBook\BudgetBook\Test.rpt"
+
