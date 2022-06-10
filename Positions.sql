@@ -103,4 +103,5 @@ SELECT CASE WHEN Pln.[JOB NUMBER] IS NULL THEN 'Yes (old)'
         ) Pri 
 ON Pri.[JOB NUMBER] = Pln.[JOB NUMBER]
 --adjust filter
-WHERE Pln.[CLASSIFICATION ID] != Pri.[FY22 Class ID]
+--WHERE Pln.[CLASSIFICATION ID] != Pri.[FY22 Class ID]
+GROUP BY 
