@@ -43,6 +43,16 @@ ORDER BY CASE WHEN A.[Agency Name] IS NULL THEN B.agency_name
 		ELSE A.[Fund Name] END
 
 -->>>>>>>>>>>>>>>>>>PILLAR AND SERVICE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<--
+
+SELECT [Objective Name] AS 'Pillar', 
+		CONCAT([Agency Name], ': ', [Program Name]) AS 'Service Name',
+SUM([FY23 BOE]) AS 'FY23 Budget',
+SUM([FY22 Adopted]) AS 'FY22 Budget'
+FROM [Finance_BPFS].[planningyear23].[LINE_ITEM_REPORT_BOE]
+WHERE NOT([FY23 BoE] = 0 AND [FY22 Adopted] = 0)
+GROUP BY [Objective Name], CONCAT([Agency Name], ': ', [Program Name])
+ORDER BY [Pillar], [Service Name]
+
 SELECT 	CASE WHEN A.[Objective Name] IS NULL THEN 'Other'
 		ELSE A.[Objective Name] END AS 'Pillar',
 		CASE WHEN A.[Program Name] IS NULL THEN CONCAT(B.[agency_name], ': ', B.[program_name])
